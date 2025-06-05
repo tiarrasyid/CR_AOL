@@ -29,7 +29,7 @@
 package me.humenius.fowler.prices;
 
 public class NewReleasePrice extends Price {
-    private static final double DAILY_CHARGE = 3.0;
+    private static final int DAILY_RATE = 3;
     private static final int BONUS_POINT_THRESHOLD = 1;
     private static final int BONUS_POINTS = 2;
     private static final int REGULAR_POINTS = 1;
@@ -38,7 +38,7 @@ public class NewReleasePrice extends Price {
 
     @Override
     public double getCharge(int daysRented) {
-        return daysRented * DAILY_CHARGE;
+        return daysRented * DAILY_RATE;
     }
 
     @Override

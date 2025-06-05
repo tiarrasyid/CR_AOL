@@ -90,11 +90,11 @@ import java.util.*;
  * <h1>Customer</h1>
  * <p>Representation of a possible customer.</p>
  */
-public class Customer {
+class Customer {
     private final String name;
     private final List<Rental> rentals = new ArrayList<>();
 
-    public Customer(String name) {
+    Customer(String name) {
         this.name = name;
     }
 
@@ -103,6 +103,20 @@ public class Customer {
      */
     public void addRental(Rental rental) {
         rentals.add(rental);
+    }
+
+    /**
+     * @return  Unmodifiable list of rentals
+     */
+    public List<Rental> getRentals() {
+        return Collections.unmodifiableList(rentals);
+    }
+
+    /**
+     * @return  Number of rentals
+     */
+    public int getRentalCount() {
+        return rentals.size();
     }
 
     /**
@@ -153,21 +167,17 @@ public class Customer {
 
     private double getTotalCharge() {
         double total = 0.0;
-
         for (Rental rental : rentals) {
             total += rental.getCharge();
         }
-
         return total;
     }
 
     private int getTotalFrequentRenterPoints() {
         int total = 0;
-
         for (Rental rental : rentals) {
             total += rental.getFrequentRenterPoints();
         }
-
         return total;
     }
 }

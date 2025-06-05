@@ -42,11 +42,11 @@ package me.humenius.fowler;
  * <h1>Rental</h1>
  * <p>Entity which represents a movie rental.</p>
  */
-public class Rental {
+class Rental {
     private final Movie movie;
     private final int daysRented;
 
-    public Rental(Movie movie, int daysRented) {
+    Rental(Movie movie, int daysRented) {
         this.movie = movie;
         this.daysRented = daysRented;
     }
