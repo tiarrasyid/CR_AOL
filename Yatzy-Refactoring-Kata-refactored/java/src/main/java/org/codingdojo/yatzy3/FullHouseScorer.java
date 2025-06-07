@@ -1,15 +1,14 @@
 package org.codingdojo.yatzy3;
 
-import java.util.List;
+import org.codingdojo.Dice;
+import org.codingdojo.Score;
+
 import java.util.Map;
 
 public class FullHouseScorer extends CategoryScorer {
     @Override
-    public int calculateScore(List<Integer> dice) {
+    public Score calculateScore(Dice dice) {
         Map<Integer, Integer> frequencies = frequencies(dice);
-        if (frequencies.containsValue(2) && frequencies.containsValue(3)) {
-            return sum(dice);
-        }
-        return 0;
+        return new Score(PatternDetectors.FULL_HOUSE.matches(frequencies) ? sum(dice) : 0);
     }
 }

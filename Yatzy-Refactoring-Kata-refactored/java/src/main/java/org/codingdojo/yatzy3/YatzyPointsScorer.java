@@ -1,13 +1,14 @@
 package org.codingdojo.yatzy3;
 
-import java.util.List;
+import org.codingdojo.Dice;
+import org.codingdojo.Score;
 
-public class YatzyPointsScorer extends CategoryScorer  {
+import java.util.Map;
+
+public class YatzyPointsScorer extends CategoryScorer {
     @Override
-    public int calculateScore(List<Integer> dice) {
-        if (frequencies(dice).containsValue(5)) {
-            return 50;
-        }
-        return 0;
+    public Score calculateScore(Dice dice) {
+        Map<Integer, Integer> frequencies = frequencies(dice);
+        return new Score(PatternDetectors.YATZY.matches(frequencies) ? 50 : 0);
     }
 }

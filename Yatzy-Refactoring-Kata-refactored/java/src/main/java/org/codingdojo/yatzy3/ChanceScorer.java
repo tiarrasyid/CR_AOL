@@ -1,10 +1,11 @@
 package org.codingdojo.yatzy3;
 
-import java.util.List;
+import org.codingdojo.Dice;
+import org.codingdojo.Score;
 
 public class ChanceScorer extends CategoryScorer {
     @Override
-    public int calculateScore(List<Integer> dice) {
-        return sum(dice);
+    public Score calculateScore(Dice dice) {
+        return new Score(sum(dice));
     }
 }
