@@ -1,8 +1,9 @@
 package org.codingdojo.yatzy3;
 
-import java.util.List;
+import org.codingdojo.Dice;
+import org.codingdojo.Score;
 
-public class NumberScorer extends CategoryScorer  {
+public class NumberScorer extends CategoryScorer {
     private final int number;
 
     public NumberScorer(int number) {
@@ -10,7 +11,7 @@ public class NumberScorer extends CategoryScorer  {
     }
 
     @Override
-    public int calculateScore(List<Integer> dice) {
-        return frequencies(dice).get(number) * number;
+    public Score calculateScore(Dice dice) {
+        return new Score(frequencies(dice).get(number) * number);
     }
 }

@@ -1,21 +1,26 @@
 package org.codingdojo.yatzy3;
 
-import java.util.List;
+import org.codingdojo.Dice;
+import org.codingdojo.Score;
+
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class TwoPairsScorer extends CategoryScorer {
     @Override
-    public int calculateScore(List<Integer> dice) {
+    public Score calculateScore(Dice dice) {
         Map<Integer, Integer> frequencies = frequencies(dice);
-        int score = 0;
-        if (frequencies(dice).values().stream().filter(f -> f >= 2).toList().size() == 2) {
-            score = Stream.of(6, 5, 4, 3, 2, 1)
-                .mapToInt(i -> i)
-                .filter(i -> frequencies.get(i) >= 2)
-                .map(i -> i * 2)
-                .sum();
-        }
-        return score;
+        return new Score(hasTwoPairs(frequencies) ? calculateTwoPairsScore(frequencies) : 0);
+    }
+
+    private boolean hasTwoPairs(Map<Integer, Integer> frequencies) {
+        return PatternDetectors.TWO_PAIRS.matches(frequencies);
+    }
+
+    private int calculateTwoPairsScore(Map<Integer, Integer> frequencies) {
+        return diceValuesDescendingStream()
+            .mapToInt(i -> i)
+            .filter(i -> frequencies.get(i) >= 2)
+            .map(i -> i * 2)
+            .sum();
     }
 }

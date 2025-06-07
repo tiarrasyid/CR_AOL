@@ -1,6 +1,9 @@
 package org.codingdojo.yatzy3;
 
-import java.util.List;
+import org.codingdojo.Dice;
+import org.codingdojo.Score;
+
+import java.util.Map;
 
 public class StraightScorer extends CategoryScorer {
     private final int straightIncludes;
@@ -9,14 +12,13 @@ public class StraightScorer extends CategoryScorer {
         this.straightIncludes = straightIncludes;
     }
 
-    boolean isStraight(List<Integer> dice) {
-        return frequencies(dice).values().stream().filter(f -> f == 1).toList().size() == 5;
-    }
     @Override
-    public int calculateScore(List<Integer> dice) {
-        if (isStraight(dice) && frequencies(dice).get(straightIncludes) != 0) {
-            return sum(dice);
-        }
-        return 0;
+    public Score calculateScore(Dice dice) {
+        Map<Integer, Integer> frequencies = frequencies(dice);
+        return new Score(isStraight(frequencies) && frequencies.get(straightIncludes) != 0 ? sum(dice) : 0);
+    }
+
+    private boolean isStraight(Map<Integer, Integer> frequencies) {
+        return PatternDetectors.STRAIGHT.matches(frequencies);
     }
 }
