@@ -1,4 +1,3 @@
-// before
 // package me.humenius.fowler.prices;
 
 // public class RegularPrice extends Price {
@@ -26,26 +25,21 @@
 //     }
 // }
 
-// after
 package me.humenius.fowler.prices;
 
 public class RegularPrice extends Price {
-    private static final double BASE_CHARGE = 2.0;
-    private static final int FREE_DAYS = 2;
-    private static final double DAILY_RATE = 1.5;
+    private static RegularPrice instance;
 
-    public RegularPrice() {}
+    private RegularPrice() {}
 
-    @Override
-    public double getCharge(int daysRented) {
-        return getBaseCharge() + getExtraCharge(daysRented);
+    public static RegularPrice getInstance() {
+        if (instance == null) {
+            instance = new RegularPrice();
+        }
+        return instance;
     }
 
-    private double getBaseCharge() {
-        return BASE_CHARGE;
-    }
-
-    private double getExtraCharge(int daysRented) {
-        return (daysRented > FREE_DAYS) ? (daysRented - FREE_DAYS) * DAILY_RATE : 0;
-    }
+    @Override public double getBaseCharge() { return 2.0; }
+    @Override public int getThresholdDays() { return 2; }
+    @Override public double getSurchargePerDay() { return 1.5; }
 }

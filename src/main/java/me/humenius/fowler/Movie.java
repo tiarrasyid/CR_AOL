@@ -1,4 +1,3 @@
-// before
 // package me.humenius.fowler;
 
 // import me.humenius.fowler.prices.Price;
@@ -38,15 +37,10 @@
 //     }
 // }
 
-// after
 package me.humenius.fowler;
 
 import me.humenius.fowler.prices.Price;
 
-/**
- * <h1>Movie</h1>
- * <p>A class that represents a movie with {@code title} and a {@link Price}.</p>
- */
 public class Movie {
     private final String title;
     private final Price price;
@@ -60,20 +54,11 @@ public class Movie {
         return title;
     }
 
-    /**
-     * Get charge which can be calculated from each class independently.
-     * @param   daysRented  Amount of days the movie has been rented
-     * @return  Total charge of a rental
-     */
-    public double getCharge(int daysRented) {
+    public double calculateCharge(int daysRented) {
         return price.getCharge(daysRented);
     }
 
-    /**
-     * @param   daysRented  Amount of days the movie has been rented
-     * @return  Total amount of possible renter points
-     */
-    public int getFrequentRenterPoints(int daysRented) {
+    public int calculateFrequentRenterPoints(int daysRented) {
         return price.getFrequentRenterPoints(daysRented);
     }
 }

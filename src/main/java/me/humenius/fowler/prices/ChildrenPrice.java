@@ -1,4 +1,3 @@
-// before
 // package me.humenius.fowler.prices;
 
 // public class ChildrenPrice extends Price {
@@ -26,26 +25,21 @@
 //     }
 // }
 
-// after
 package me.humenius.fowler.prices;
 
 public class ChildrenPrice extends Price {
-    private static final double BASE_CHARGE = 1.5;
-    private static final int FREE_DAYS = 3;
-    private static final double DAILY_RATE = 1.5;
+    private static ChildrenPrice instance;
 
-    public ChildrenPrice() {}
+    private ChildrenPrice() {}
 
-    @Override
-    public double getCharge(int daysRented) {
-        return getBaseCharge() + getExtraCharge(daysRented);
+    public static ChildrenPrice getInstance() {
+        if (instance == null) {
+            instance = new ChildrenPrice();
+        }
+        return instance;
     }
 
-    private double getBaseCharge() {
-        return BASE_CHARGE;
-    }
-
-    private double getExtraCharge(int daysRented) {
-        return (daysRented > FREE_DAYS) ? (daysRented - FREE_DAYS) * DAILY_RATE : 0;
-    }
+    @Override public double getBaseCharge() { return 1.5; }
+    @Override public int getThresholdDays() { return 3; }
+    @Override public double getSurchargePerDay() { return 1.5; }
 }

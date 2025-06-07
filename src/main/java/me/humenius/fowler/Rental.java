@@ -1,4 +1,3 @@
-// before
 // package me.humenius.fowler;
 
 // /**
@@ -35,13 +34,8 @@
 //     }
 // }
 
-// after
 package me.humenius.fowler;
 
-/**
- * <h1>Rental</h1>
- * <p>Entity which represents a movie rental.</p>
- */
 class Rental {
     private final Movie movie;
     private final int daysRented;
@@ -59,17 +53,11 @@ class Rental {
         return movie;
     }
 
-    /**
-     * @return  Charge of movie based of days rented.
-     */
     public double getCharge() { 
-        return movie.getCharge(daysRented); 
+        return movie.calculateCharge(daysRented); 
     }
 
-    /**
-     * @return  Frequent renter points of movie based of days rented.
-     */
     public int getFrequentRenterPoints() {
-        return movie.getFrequentRenterPoints(daysRented);
+        return movie.calculateFrequentRenterPoints(daysRented);
     }
 }

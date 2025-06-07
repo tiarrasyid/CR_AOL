@@ -1,4 +1,3 @@
-// before
 // package me.humenius.fowler;
 
 // import java.util.*;
@@ -80,16 +79,11 @@
 //         return total;
 //     }
 // }
-    
-// after
+
 package me.humenius.fowler;
 
 import java.util.*;
 
-/**
- * <h1>Customer</h1>
- * <p>Representation of a possible customer.</p>
- */
 class Customer {
     private final String name;
     private final List<Rental> rentals = new ArrayList<>();
@@ -98,86 +92,45 @@ class Customer {
         this.name = name;
     }
 
-    /**
-     * @param   rental  Movie to add to one customer's rental list
-     */
     public void addRental(Rental rental) {
         rentals.add(rental);
     }
 
-    /**
-     * @return  Unmodifiable list of rentals
-     */
-    public List<Rental> getRentals() {
-        return Collections.unmodifiableList(rentals);
-    }
-
-    /**
-     * @return  Number of rentals
-     */
-    public int getRentalCount() {
-        return rentals.size();
-    }
-
-    /**
-     * @return  A statement including all rented movies, their charges and total possible earned frequent renter points.
-     */
     public String getStatement() {
         StringBuilder statement = new StringBuilder();
-        addHeader(statement);
-        addRentalDetails(statement);
-        addFooter(statement);
-        return statement.toString();
-    }
-
-    private void addHeader(StringBuilder statement) {
         statement.append("Rental Record for ")
                  .append(name)
-                 .append("\n\t")
-                 .append("Title")
-                 .append("\t\t")
-                 .append("Days")
-                 .append('\t')
-                 .append("Amount")
-                 .append('\n');
-    }
+                 .append("\n\tTitle\t\tDays\tAmount\n");
 
-    private void addRentalDetails(StringBuilder statement) {
         for (Rental rental : rentals) {
             statement.append('\t')
                      .append(rental.getMovie().getTitle())
-                     .append('\t')
-                     .append('\t')
+                     .append("\t\t")
                      .append(rental.getDaysRented())
-                     .append('\t')
                      .append('\t')
                      .append(rental.getCharge())
                      .append('\n');
         }
-    }
 
-    private void addFooter(StringBuilder statement) {
         statement.append("Amount owed is ")
-                 .append(getTotalCharge())
+                 .append(getTotalCharge(rentals))
                  .append('\n')
                  .append("You earned ")
-                 .append(getTotalFrequentRenterPoints())
+                 .append(getTotalFrequentRenterPoints(rentals))
                  .append(" frequent renter points");
+
+        return statement.toString();
     }
 
-    private double getTotalCharge() {
-        double total = 0.0;
-        for (Rental rental : rentals) {
-            total += rental.getCharge();
-        }
-        return total;
+    private static double getTotalCharge(List<Rental> rentals) {
+        return rentals.stream()
+                      .mapToDouble(Rental::getCharge)
+                      .sum();
     }
 
-    private int getTotalFrequentRenterPoints() {
-        int total = 0;
-        for (Rental rental : rentals) {
-            total += rental.getFrequentRenterPoints();
-        }
-        return total;
+    private static int getTotalFrequentRenterPoints(List<Rental> rentals) {
+        return rentals.stream()
+                      .mapToInt(Rental::getFrequentRenterPoints)
+                      .sum();
     }
 }

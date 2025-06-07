@@ -1,4 +1,3 @@
-// before
 // package me.humenius.fowler.prices;
 
 // public class NewReleasePrice extends Price {
@@ -25,24 +24,37 @@
 //     }
 // }
 
-// after
 package me.humenius.fowler.prices;
 
 public class NewReleasePrice extends Price {
-    private static final int DAILY_RATE = 3;
-    private static final int BONUS_POINT_THRESHOLD = 1;
-    private static final int BONUS_POINTS = 2;
-    private static final int REGULAR_POINTS = 1;
+    private static NewReleasePrice instance;
 
-    public NewReleasePrice() {}
+    private NewReleasePrice() {}
 
-    @Override
-    public double getCharge(int daysRented) {
-        return daysRented * DAILY_RATE;
+    public static NewReleasePrice getInstance() {
+        if (instance == null) {
+            instance = new NewReleasePrice();
+        }
+        return instance;
+    }
+
+    @Override 
+    public double getBaseCharge() { 
+        return 0.0; 
+    }
+
+    @Override 
+    public int getThresholdDays() { 
+        return 0; 
+    }
+
+    @Override 
+    public double getSurchargePerDay() { 
+        return 3.0; 
     }
 
     @Override
     public int getFrequentRenterPoints(int daysRented) {
-        return (daysRented > BONUS_POINT_THRESHOLD) ? BONUS_POINTS : REGULAR_POINTS;
+        return (daysRented > 1) ? 2 : 1;
     }
 }
